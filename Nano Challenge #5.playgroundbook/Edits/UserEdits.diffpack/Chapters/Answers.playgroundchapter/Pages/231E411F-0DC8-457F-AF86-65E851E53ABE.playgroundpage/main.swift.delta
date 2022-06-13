@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Answers.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>struct Contato {
+    var nome: String
+    var numero: Int
+}
+var minhaAgenda: [Contato] = []
+
+var nome: String
+var escolha: String
+
+show("Você entrou na sua Agenda de Contatos")
+
+repeat {
+    show("O que você deseja fazer?")
+    escolha = askForChoice("escolha", strings: ["Salvar novo contato", "Pesquisar contato", "Mostrar contatos", "Alterar nome", "Alterar número", "Sair"])
+    
+    switch escolha {
+    case "Salvar novo contato":
+        nome = ask("Insira o nome do contato")
+        numero = askForNumber("Insira o número do contato")
+        salvarContato(nome: nome, numero: numero)
+        show("Contato \(nome) salvo com sucesso!")
+        pauseUntilTapped(message: "Continuar")
+    case "Pesquisar contato":
+        nomeBusca = ask("Pesquise")
+        let (achou, contato) = pesquisaContato(nome: nomeBusca)
+        if achou == true {
+            show("Nome: \(contato.nome)\nNúmero: \(contato.numero)")
+        }
+        pauseUntilTapped(message: "Continuar")
+    case "Mostrar contatos":
+        mostrarAgenda(vetor: minhaAgenda)
+        pauseUntilTapped(message: "Continuar")
+    case "Alterar nome":
+        nomeAltera = ask("Pesquise o contato que deseja alterar o nome")
+        mudaContato(nome: nomeAltera)
+    case "Alterar número":
+        nomeAltera = ask("Pesquise o contato que deseja alterar o número")
+        mudaNumero(nome: nomeAltera)
+    case "Sair":
+        show("Você saiu!")
+        break
+    default:
+        show("Digite um valor válido.")
+    }
+} while escolha != "Sair"
+
+func salvarContato(nome: String, numero: Int) {
+    minhaAgenda.append(Contato.init(nome: nome, numero: numero))
+}
+
+func ordernarVetor(vetor: [Contato]) -&gt; [Contato] {
+    var vetorOrdenado = vetor
+    for i in 0...vetorOrdenado.count - 1 {
+        for j in 0...vetorOrdenado.count - 1 {
+            if vetorOrdenado[i].nome &lt; vetorOrdenado[j].nome {
+                let aux = vetorOrdenado[i]
+                vetorOrdenado[i] = vetorOrdenado[j]
+                vetorOrdenado[j] = aux
+            }
+        }
+    }
+    return vetorOrdenado
+}
+
+func mostrarAgenda(vetor: [Contato]) -&gt; [Contato] {
+    for i in ordernarVetor(vetor: minhaAgenda) {
+        show("\nNome: \(i.nome)\nNúmero: \(i.numero)\n")
+    }
+    return vetor
+}
+
+func pesquisaContato(nome: String) -&gt; (DarwinBoolean, Contato) {
+    for i in 0 ..&lt; minhaAgenda.count {
+        if minhaAgenda[i].nome == nomeBusca {
+            return (true, minhaAgenda[i])
+            break
+        } else if i == minhaAgenda.count - 1 {
+            show("Esse contato não existe na agenda!")
+            return (false, Contato(nome: "", numero: 0))
+        }
+    }
+    return (false, Contato(nome: "", numero: 0))
+}
+var nomeBusca: String
+
+func mudaContato(nome: String){
+    for i in 0 ..&lt; minhaAgenda.count {
+        if minhaAgenda[i].nome == nomeAltera {
+            novoNome = ask("Digite o novo nome do contato")
+            minhaAgenda[i].nome = novoNome
+            show("Nome \(nome) alterado com sucesso para \(novoNome)!")
+            break
+        } else if i == minhaAgenda.count - 1 {
+            show("Esse contato não existe na agenda!")
+        }
+    }
+}
+var novoNome: String
+
+func mudaNumero(nome: String){
+    for i in 0 ..&lt; minhaAgenda.count {
+        if minhaAgenda[i].nome == nomeAltera {
+            novoNumero = askForNumber("Digite o novo número do contato")
+            minhaAgenda[i].numero = novoNumero
+            show("Número \(numero ) alterado com sucesso para \(novoNumero)")
+            break
+        } else if i == minhaAgenda.count - 1 {
+            show("Esse contato não existe na agenda!")
+        }
+    }
+}
+var numero: Int
+var nomeAltera: String
+var novoNumero: Int
+</string>
+			<key>ModifiedRange</key>
+			<string>{242, 3663}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{242, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
